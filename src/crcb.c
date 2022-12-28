@@ -4,7 +4,7 @@
 
 #define COLS 16
 
-// auxiliar fucionality
+// auxiliar fuctionality
 void initialize(struct circularBuffer *b, char *buffer, size_t size)
 {
 	b->data = buffer;
@@ -61,7 +61,7 @@ void printState(struct circularBuffer *b)
  */
 void insert(struct circularBuffer *b, char v)
 {
-	assert(b->len < b->cap && "the buffer is full");
+	assert(b->len < b->activecap && "the buffer is full");
 	b->data[b->head++] = v;
 	b->len++;
 	if (b->head == b->cap)
@@ -141,4 +141,14 @@ void fill(struct circularBuffer *b, size_t filled)
 	// assume filled < need
 	b->head += filled;
 	b->len += filled;
+}
+
+bool is_empty(struct circularBuffer *b)
+{
+	return b->len == 0;
+}
+
+bool is_full(struct circularBuffer *b)
+{
+	return b->len == b->activecap;
 }
