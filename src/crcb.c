@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <crcb.h>
+#include <stdbool.h>
 
 #define COLS 16
 
@@ -27,7 +28,7 @@ void printBuffer(struct circularBuffer *b)
 {
 	size_t i;
 	for( i = 0; i + COLS <= b->cap; i+=COLS) {
-		printf("%08lx: ", i);
+		printf("%08zx: ", i);
 		for(int j = 0; j < COLS; j+=2) {
 			printf("%02x%02x ",(unsigned char) b->data[i+j],
 				(unsigned char) b->data[i+j+1]);
@@ -35,7 +36,7 @@ void printBuffer(struct circularBuffer *b)
 		printf("\n");
 	}
 	if (i < b->cap) {
-		printf("%08lx: ", i);
+		printf("%08zx: ", i);
 		for(size_t j = i; j < b->cap; j++) {
 			printf("%02x",(unsigned char) b->data[j]);
 			if (j % 2)
@@ -47,11 +48,11 @@ void printBuffer(struct circularBuffer *b)
 
 void printState(struct circularBuffer *b)
 {
-	printf("cap %ld\n",		 b->cap);
-	printf("activecap %ld\n",	 b->activecap);
-	printf("len %ld\n",		 b->len);
-	printf("head %ld\n",		 b->head);
-	printf("tail %ld\n",		 b->tail);
+	printf("cap %zu\n",		 b->cap);
+	printf("activecap %zu\n",	 b->activecap);
+	printf("len %zu\n",		 b->len);
+	printf("head %zu\n",		 b->head);
+	printf("tail %zu\n",		 b->tail);
 }
 
 
