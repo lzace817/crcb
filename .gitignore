@@ -1,2 +1,3 @@
 *.o
 example/crcb
+run-tests
