@@ -1,16 +1,21 @@
 .SUFFIXES:
 
 srcdir  = .
-OBJS    := obj/tests/main.o obj/src/crcb.o obj/tests/tests.o
+outdir ?= obj
+OBJS   := $(outdir)/src/crcb.o $(outdir)/tests/cb-test.o
 INC_DIR = $(srcdir)/include
 CFLAGS  = -Wall -Werror -Wextra -ggdb -I$(INC_DIR)
 # CFLAGS += -D DEBUG
+TESTS := cb-test fcb-test
 
 -include config.mk
 
-all: run-tests
+all: $(TESTS)
 
-run-tests: $(OBJS)
+fcb-test: $(outdir)/tests/fcb-test.o
+	$(CC) -o $@ $^ $(CFLAGS)
+
+cb-test: $(OBJS)
 	$(CC) -o $@ $^ $(CFLAGS)
 
 list:
@@ -23,16 +28,15 @@ $(OBJS): | $(OBJ_DIRS)
 
 $(OBJ_DIRS):
 	@mkdir -p $@
-	@echo '*' > obj/.gitignore
 
-obj/%.o: $(srcdir)/%.c
+$(outdir)/%.o: $(srcdir)/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-test: run-tests
-	./run-tests
+test: all
+	./fcb-test
+	./cb-test
 
 clean:
-	rm -r obj run-tests
-
+	rm -r $(outdir) fcb-test cb-test
 
 .PHONY: all clean list test

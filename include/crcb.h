@@ -5,7 +5,7 @@
 
 #include <stdlib.h>
 
-struct circularBuffer {
+struct CircularBuffer {
 	char *data;
 	size_t len;
 	size_t cap;
@@ -14,15 +14,15 @@ struct circularBuffer {
 	size_t tail; // ptr?
 };
 
-void initialize(struct circularBuffer *b, char *buffer, size_t size);
-void fillpattern(struct circularBuffer *b);
-void printBuffer(struct circularBuffer *b);
-void printState(struct circularBuffer *b);
+void initialize(struct CircularBuffer *b, char *buffer, size_t size);
+void fillpattern(struct CircularBuffer *b);
+void printBuffer(struct CircularBuffer *b);
+void printState(struct CircularBuffer *b);
 
-void insert(struct circularBuffer *b, char v);
-char bremove(struct circularBuffer *b);
-char *reserve(struct circularBuffer *b, size_t need);
-void fill(struct circularBuffer *b, size_t filled);
+void insert(struct CircularBuffer *b, char v);
+char bremove(struct CircularBuffer *b);
+char *reserve(struct CircularBuffer *b, size_t need);
+void fill(struct CircularBuffer *b, size_t filled);
 
 
 #endif

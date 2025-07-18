@@ -6,7 +6,7 @@
 #define COLS 16
 
 // auxiliar fuctionality
-void initialize(struct circularBuffer *b, char *buffer, size_t size)
+void initialize(struct CircularBuffer *b, char *buffer, size_t size)
 {
 	b->data = buffer;
 	b->cap = size;
@@ -17,14 +17,14 @@ void initialize(struct circularBuffer *b, char *buffer, size_t size)
 	b->activecap = size;
 }
 
-void fillpattern(struct circularBuffer *b)
+void fillpattern(struct CircularBuffer *b)
 {
 	for(size_t i = 0; i < b->cap; i++) {
 		b->data[i] = i % 32;
 	}
 }
 
-void printBuffer(struct circularBuffer *b)
+void printBuffer(struct CircularBuffer *b)
 {
 	size_t i;
 	for( i = 0; i + COLS <= b->cap; i+=COLS) {
@@ -46,7 +46,7 @@ void printBuffer(struct circularBuffer *b)
 	}
 }
 
-void printState(struct circularBuffer *b)
+void printState(struct CircularBuffer *b)
 {
 	printf("cap %zu\n",		 b->cap);
 	printf("activecap %zu\n",	 b->activecap);
@@ -60,7 +60,7 @@ void printState(struct circularBuffer *b)
  * b : buffer
  * v : character
  */
-void insert(struct circularBuffer *b, char v)
+void insert(struct CircularBuffer *b, char v)
 {
 	assert(b->len < b->activecap && "the buffer is full");
 	b->data[b->head++] = v;
@@ -73,7 +73,7 @@ void insert(struct circularBuffer *b, char v)
  * b : buffer
  * returns character in front of buffer
  */
-char bremove(struct circularBuffer *b)
+char bremove(struct CircularBuffer *b)
 {
 	assert(b->len > 0 && "the buffer is empty");
 	char tmp = b->data[b->tail];
@@ -96,7 +96,7 @@ char bremove(struct circularBuffer *b)
  * return pointer to the begining of reserved space if possible
  * or NULL if fail
  */
-char *reserve(struct circularBuffer *b, size_t need)
+char *reserve(struct CircularBuffer *b, size_t need)
 {
 	// activecap = len + empty
 	if (b->tail < b->head) {
@@ -137,19 +137,19 @@ char *reserve(struct circularBuffer *b, size_t need)
  * filled: quantity of filled character in the begining of reserved
  * space.
  */
-void fill(struct circularBuffer *b, size_t filled)
+void fill(struct CircularBuffer *b, size_t filled)
 {
 	// assume filled < need
 	b->head += filled;
 	b->len += filled;
 }
 
-bool is_empty(struct circularBuffer *b)
+bool is_empty(struct CircularBuffer *b)
 {
 	return b->len == 0;
 }
 
-bool is_full(struct circularBuffer *b)
+bool is_full(struct CircularBuffer *b)
 {
 	return b->len == b->activecap;
 }

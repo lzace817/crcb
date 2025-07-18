@@ -1,3 +1,5 @@
 *.o
 example/crcb
 run-tests
+fcb-test
+cb-test
