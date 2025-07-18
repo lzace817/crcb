@@ -2,11 +2,11 @@
 
 srcdir  = .
 outdir ?= obj
-OBJS   := $(outdir)/src/crcb.o $(outdir)/tests/cb-test.o
+OBJS   := $(outdir)/src/crcb.o $(outdir)/tests/crcb-test.o
 INC_DIR = $(srcdir)/include
 CFLAGS  = -Wall -Werror -Wextra -ggdb -I$(INC_DIR)
 # CFLAGS += -D DEBUG
-TESTS := cb-test fcb-test
+TESTS := crcb-test fcb-test
 
 -include config.mk
 
@@ -15,7 +15,7 @@ all: $(TESTS)
 fcb-test: $(outdir)/tests/fcb-test.o
 	$(CC) -o $@ $^ $(CFLAGS)
 
-cb-test: $(OBJS)
+crcb-test: $(OBJS)
 	$(CC) -o $@ $^ $(CFLAGS)
 
 list:
@@ -34,9 +34,9 @@ $(outdir)/%.o: $(srcdir)/%.c
 
 test: all
 	./fcb-test
-	./cb-test
+	./crcb-test
 
 clean:
-	rm -r $(outdir) fcb-test cb-test
+	rm -r $(outdir) fcb-test crcb-test
 
 .PHONY: all clean list test

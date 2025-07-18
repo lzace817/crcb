@@ -106,6 +106,13 @@ void full2circular(void)
     fcb_free(&b);
 }
 
+void underflow(void)
+{
+    FCB b = fcb_new(2);
+    fcb_dequeue(&b);
+    fcb_free(&b);
+}
+
 int main(void)
 {
     check_accounting();
@@ -113,6 +120,9 @@ int main(void)
     double_grow();
     make_buffer_circular_again();
     full2circular();
+
+    // TODO: make this test work
+    // underflow(); // must crash
 
     printf("[INFO] fcb-test completed\n");
     return 0;

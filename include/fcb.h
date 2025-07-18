@@ -21,7 +21,7 @@ int fcb_dequeue(FCB* q);
 #endif // FCB_H
 
 #ifdef FCB_IMPLEMENTATION
-
+#include <assert.h>
 #define log_error printf
 
 #define min(a, b) ((a) < (b))? (a) : (b)
@@ -50,6 +50,7 @@ FCB fcb_new(int capacity)
 void fcb_free(FCB *q)
 {
     free(q->items);
+    *q = (FCB){0};
 }
 
 int fcb_is_empty(FCB* q)
@@ -83,9 +84,8 @@ void fcb_enqueue(FCB* q, int element)
 
 int fcb_dequeue(FCB* q)
 {
-    int result = -1;
     if (q->size) {
-        result = q->items[q->read_ptr++];
+        int result = q->items[q->read_ptr++];
         q->read_ptr %= q->old_top;
         q->size--;
         if(q->old_size) {
@@ -95,8 +95,9 @@ int fcb_dequeue(FCB* q)
                 q->old_top = q->capacity;
             }
         }
+        return result;
     }
-    return result;
+    assert(0 && "underflow");
 }
 
 #endif // FCB_IMPLEMENTATION
